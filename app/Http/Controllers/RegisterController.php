@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RegisterController extends Controller
 {
+    public $id;
     /**
      * Display a listing of the resource.
      */
@@ -32,12 +34,17 @@ class RegisterController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($this->id),
+            ],
             'password' => 'required'
         ],[
             'name.required' => 'Nama tidak boleh kosong!',
             'email.required' => 'Email tidak boleh kosong!',
             'email.email' => 'Format email tidak benar!',
+            'email.unique' => 'Email sudah ada yang digunakan!',
             'password.required' => 'Password tidak boleh kosong!'
         ]);
 

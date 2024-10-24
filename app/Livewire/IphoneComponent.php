@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Iphone;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithoutUrlPagination;
@@ -13,11 +14,25 @@ class IphoneComponent extends Component
     use WithPagination, WithoutUrlPagination, WithFileUploads;
     protected $paginationTheme = 'bootstrap';
     public $addpage, $editpage = false;
-    public $seri, $imei, $jenis, $kapasitas, $harga, $foto, $id;
+    public $seri, $imei, $jenis, $kapasitas, $harga, $foto, $id, $search;
+    #[On('lihat-iphone')]
     public function render()
     {
-        $data['iphone'] = Iphone::paginate(10);
+        if ($this->search!="") {
+            $data ['iphone'] = Iphone::where('seri', 'like', '%' . $this->search . '%')
+                  ->orWhere('imei', 'like', '%' . $this->search . '%')
+                  ->orWhere('jenis', 'like', '%' . $this->search . '%')
+                  ->orWhere('kapasitas', 'like', '%' . $this->search . '%')
+                  ->paginate(10);
+        }else{
+            $data['iphone'] = Iphone::paginate(5);
+        }
         return view('livewire.iphone-component', $data);
+    }
+
+    public function cari()
+    {
+        $this->dispatch('lihat-iphone');
     }
 
     public function create()

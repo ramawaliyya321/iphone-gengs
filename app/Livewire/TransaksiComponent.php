@@ -6,6 +6,7 @@ use App\Models\Iphone;
 use App\Models\Transaksi;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
@@ -14,8 +15,9 @@ class TransaksiComponent extends Component
 {
     use WithPagination, WithoutUrlPagination;
     public $addpage, $lihatpage = false;
-    public $nama, $ponsel, $alamat, $lama, $tgl_pesan, $iphone_id, $harga, $total;
+    public $nama, $ponsel, $alamat, $lama, $tgl_pesan, $iphone_id, $harga, $total, $search;
     public $dataTransaksi = array();
+    #[On('lihat-iphone')]
     public function mount()
     {
         if (Auth::user()->role === 'anggota') {
@@ -25,9 +27,22 @@ class TransaksiComponent extends Component
 
     public function render()
     {
-        $data['iphone'] = Iphone::paginate(5);
+        if ($this->search!="") {
+            $data ['iphone'] = Iphone::where('seri', 'like', '%' . $this->search . '%')
+                  ->orWhere('imei', 'like', '%' . $this->search . '%')
+                  ->orWhere('jenis', 'like', '%' . $this->search . '%')
+                  ->orWhere('kapasitas', 'like', '%' . $this->search . '%')
+                  ->paginate(10);
+        }else{
+            $data['iphone'] = Iphone::paginate(5);
+        }
         $data['users'] = User::where('role', 'anggota')->get();
         return view('livewire.transaksi-component', $data);
+    }
+
+    public function cari()
+    {
+        $this->dispatch('lihat-laporan');
     }
 
     public function create($id, $harga)

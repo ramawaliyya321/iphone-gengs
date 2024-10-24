@@ -9,6 +9,15 @@
                         </div>
                     @endif
                     <h6 class="mb-4">Data Unit iPhone</h6>
+                    <div class="row mt-4">
+                        <div class="col md-2 mb-3">
+                            <input type="text" class="form-control" wire:model="search"
+                                placeholder="Cari iPhone berdasarkan seri, kapasitas, atau jenis...">
+                        </div>
+                        <div class="col md-2">
+                            <button class="btn btn-sm btn-primary" wire:click="cari">Cari</button>
+                        </div>
+                    </div>
                     <table class="table">
                         <thead>
                             <tr>
@@ -34,7 +43,8 @@
                                     <td>{{$data->kapasitas}}</td>
                                     <td>{{$data->harga}}</td>
                                     <td>
-                                        <img src="{{asset('storage/iphone/'.$data->foto)}}" alt="{{$data->seri}}" style="width: 150px">
+                                        <img src="{{asset('storage/iphone/' . $data->foto)}}" alt="{{$data->seri}}"
+                                            style="width: 150px">
                                     </td>
                                     <td>
                                         <button class="btn btn-info" wire:click="edit({{$data->id}})">Edit</button>

@@ -35,7 +35,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="lama" class="form-label">Lama Peminjaman (Hari)</label>
+                        <label for="lama" class="form-label">Lama Peminjaman (>= 5 Hari akan dikenakan denda!)</label>
                         <input type="number" class="form-control" wire:model="lama" wire:change="hitung" id="lama" value="{{@old('lama')}}" min="1">
                         @error('lama')
                             <div class="form-text text-danger">{{$message}}</div>

@@ -12,6 +12,7 @@ use Livewire\WithPagination;
 class LaporanComponent extends Component
 {
     use WithPagination, WithoutUrlPagination;
+    protected $paginationTheme = 'bootstrap';
     public $tanggal1, $tanggal2;
     #[On('lihat-laporan')]
     public function render()

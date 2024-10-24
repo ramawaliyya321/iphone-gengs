@@ -33,6 +33,10 @@ Route::get('login/keluar', [LoginController::class, 'keluar'])->name('login.kelu
     Route::get('laporan', function () {
         return view('laporan.index');
     })->name('laporan')->middleware('auth');
+
+    Route::get('profile',function(){
+        return view('profile.index');
+    })->name('profile')->middleware('auth');
 //});
 
 Route::middleware(['auth',IsUser::class])->group(function(){
