@@ -1,4 +1,4 @@
-## iPhoneGengs
+# iPhoneGengs
 
 ## Anggota Kelompok
 
@@ -28,7 +28,10 @@ Tujuan dari proyek ini adalah:
 - Menyewa iPhone
 - Mengembalikan Unit
 
-Skema Proyek dari Database
+## Skema Proyek dari Database
 
 
 ![erd iphonegengs drawio](https://github.com/user-attachments/assets/1b715bbc-b06b-4a7d-b27c-ff12069e6d78)
+
+## Demo Video
+(iPhoneGengs)[https://drive.google.com/file/d/1US--miqTMmoYYKWsK636USfzSP6-Ex25/view?usp=sharing].
