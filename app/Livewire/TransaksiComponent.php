@@ -27,13 +27,13 @@ class TransaksiComponent extends Component
 
     public function render()
     {
-        if ($this->search!="") {
-            $data ['iphone'] = Iphone::where('seri', 'like', '%' . $this->search . '%')
-                  ->orWhere('imei', 'like', '%' . $this->search . '%')
-                  ->orWhere('jenis', 'like', '%' . $this->search . '%')
-                  ->orWhere('kapasitas', 'like', '%' . $this->search . '%')
-                  ->paginate(10);
-        }else{
+        if ($this->search != "") {
+            $data['iphone'] = Iphone::where('seri', 'like', '%' . $this->search . '%')
+                ->orWhere('imei', 'like', '%' . $this->search . '%')
+                ->orWhere('jenis', 'like', '%' . $this->search . '%')
+                ->orWhere('kapasitas', 'like', '%' . $this->search . '%')
+                ->paginate(10);
+        } else {
             $data['iphone'] = Iphone::paginate(5);
         }
         $data['users'] = User::where('role', 'anggota')->get();
@@ -83,8 +83,8 @@ class TransaksiComponent extends Component
         }
 
         $jumlahPeminjaman = Transaksi::where('user_id', $selectedUser->id)
-        ->where('status', '!=', 'SELESAI')
-        ->count();
+            ->where('status', '!=', 'SELESAI')
+            ->count();
 
         if ($jumlahPeminjaman >= 2) {
             session()->flash('error', 'Maksimal peminjaman adalah 2 unit.');
@@ -101,6 +101,13 @@ class TransaksiComponent extends Component
             $this->lama = intval($this->lama);
             $denda = $this->hitungDenda($this->lama);
             $this->total = ($this->lama * $this->harga) + $denda;
+
+            dd([
+                'lama' => $this->lama,
+                'harga' => $this->harga,
+                'denda' => $denda,
+                'total' => $this->total,
+            ]);
 
             Transaksi::create([
                 'user_id' => $selectedUser->id,
@@ -126,7 +133,7 @@ class TransaksiComponent extends Component
 
         if ($lama > $maksimalHari) {
             $kelebihanHari = $lama - $maksimalHari;
-            return $kelebihanHari * $dendaPerHari; 
+            return $kelebihanHari * $dendaPerHari;
         }
         return 0;
     }
